@@ -52,44 +52,43 @@ namespace DatApp.Controllers
 
         [HttpPost("login")]
 
+        
         public async Task<IActionResult> Login(UserForLogin userForLogin)
         {
-            var userFromRepo = await _repo.Login(userForLogin.Username.ToLower(), userForLogin.Password);
-            if (userFromRepo == null)
-                return Unauthorized();
 
-            var claims = new[]
-            {
+                var userFromRepo = await _repo.Login(userForLogin.Username.ToLower(), userForLogin.Password);
+                if (userFromRepo == null)
+                    return Unauthorized();
+
+                var claims = new[]
+                {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name, userFromRepo.Username)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(2),
-                SigningCredentials = creds
-            };
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.Now.AddDays(2),
+                    SigningCredentials = creds
+                };
 
-            var TokenHandeler = new JwtSecurityTokenHandler();
+                var TokenHandeler = new JwtSecurityTokenHandler();
 
-            var Token = TokenHandeler.CreateToken(tokenDescriptor);
+                var Token = TokenHandeler.CreateToken(tokenDescriptor);
 
 
-             return Ok(new
-             {
-                Token = TokenHandeler.WriteToken(Token)
+                return Ok(new
+                {
+                    Token = TokenHandeler.WriteToken(Token)
+                }
+                   );
+
             }
-                );
 
-
-
-
-
-        }
     }
 }

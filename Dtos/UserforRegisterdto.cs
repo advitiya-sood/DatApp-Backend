@@ -13,7 +13,7 @@ namespace DatApp.Dtos
 
 
         [Required]
-        [StringLength(10, MinimumLength =6,ErrorMessage ="Letters should be between 6 and 10")]
+        [StringLength(20, MinimumLength =5,ErrorMessage ="Letters should be between 5 and 20")]
         public string Password { get; set; }
     }
 }
