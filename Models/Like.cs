@@ -1,0 +1,16 @@
+using System;
+
+namespace DatApp.Models
+{
+    public class Like
+    {
+        public int LikerId { get; set; }
+        public User Liker { get; set; }
+
+        public int LikeeId { get; set; }
+        public User Likee { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
+}
+

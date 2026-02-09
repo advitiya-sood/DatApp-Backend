@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +23,12 @@ namespace DatApp.Models
         public string Intrests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public ICollection <Photo> Photos  { get; set; }
+        public ICollection<Photo> Photos  { get; set; }
+
+        // Users that this user has liked (I am the liker)
+        public ICollection<Like> Likees { get; set; }
+
+        // Users that have liked this user (I am the likee)
+        public ICollection<Like> Likers { get; set; }
     }
 }

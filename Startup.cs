@@ -1,4 +1,5 @@
 using DatApp.Data;
+using DatApp.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,8 +33,10 @@ namespace DatApp
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            // services.AddControllers().AddNewtonsoftJson();
             services.AddCors();
             services.AddScoped< IAuthRepo, AuthRepo>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

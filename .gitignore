@@ -1,2 +1,48 @@
-.vscode
-appsettings.json
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# IDE / OS files
+.vscode/
+.vs/
+.DS_Store
+
+
+# Frontend - React + Vite
+**/node_modules/
+**/dist/
+**/build/
+**/*.local
+**.env
+**.env.development
+**.env.production
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# --- .NET CORE ---
+**/bin/
+**/obj/
+*.db
+*.db-shm
+*.db-wal
+appsettings.Development.json
+
+# --- FRONTEND (React + Vite) ---
+**/node_modules/
+**/dist/
+**/build/
+.env*
+
+# --- IDE & OS ---
+.vs/
+.vscode/
+.DS_Store
