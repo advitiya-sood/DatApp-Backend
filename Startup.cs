@@ -1,5 +1,4 @@
 using DatApp.Data;
-using DatApp.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +15,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using DatApp.Services;
+using DatApp.Helpers;
 
 namespace DatApp
 {
@@ -29,50 +30,60 @@ namespace DatApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+public void ConfigureServices(IServiceCollection services)
+{
+    // 1. Database Connection
+    services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+    
+    // 2. Controllers (System.Text.Json is default in .NET 8)
+    services.AddControllers();
+    
+    // 3. CORS - Important: Define a policy if you want more control, or keep it open for dev
+    services.AddCors();
+
+    services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+    
+    // 4. Dependency Injection
+    services.AddScoped<IAuthRepo, AuthRepo>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IAuthService, AuthService>();
+    services.AddScoped<IUserService, UserService>();
+    
+    // 5. JWT Authentication
+    var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
-            // services.AddControllers().AddNewtonsoftJson();
-            services.AddCors();
-            services.AddScoped< IAuthRepo, AuthRepo>();
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration
-                        .GetSection("AppSettings:Token").Value)),
-                        ValidateAudience = false,
-                        ValidateIssuer = false
-
-                    };
-                });
-
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                app.UseDeveloperExceptionPage();
-            }
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateAudience = false,
+                ValidateIssuer = false
+            };
+        });
+}
 
-            // app.UseHttpsRedirection();
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseAuthentication();
-            app.UseRouting();
+    // ORDER MATTERS IN .NET 8:
+    app.UseRouting();
 
-            app.UseAuthorization();
+    // CORS must be AFTER UseRouting but BEFORE UseAuthentication/Authorization
+    app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+}
     }
 }

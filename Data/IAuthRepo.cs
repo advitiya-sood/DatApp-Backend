@@ -13,6 +13,6 @@ namespace DatApp.Data
 
         Task<User> Login(string username, string password);
 
-        Task<bool> UserExist(string username);
+        Task<bool> UserExists(string username);
     }
 }

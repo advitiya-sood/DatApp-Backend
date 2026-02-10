@@ -75,9 +75,7 @@ export function likeUser(userId, recipientId) {
   return request(`/api/users/${userId}/like/${recipientId}`, {
     method: 'POST'
   });
-}
-
-export function updateUserProfile(id, payload) {
+}export function updateUserProfile(id, payload) {
   return request(`/api/users/${id}`, {
     method: 'PUT',
     body: JSON.stringify(payload)
