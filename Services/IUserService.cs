@@ -10,5 +10,7 @@ namespace DatApp.Services
         Task<UserForDetailedDto> GetUserAsync(int id);
         Task UpdateUserAsync(int id, UserForUpdateDto userForUpdateDto);
         Task LikeUserAsync(int currentUserId, int recipientId);
+        Task<IEnumerable<UserForListDto>> GetUserLikesAsync(string predicate, int userId);
+    
     }
 }

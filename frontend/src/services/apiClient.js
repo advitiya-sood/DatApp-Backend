@@ -81,3 +81,9 @@ export function likeUser(userId, recipientId) {
     body: JSON.stringify(payload)
   });
 }
+
+export function fetchUserLikes(predicate) {
+  return request(`/api/users/likes?predicate=${predicate}`, {
+    method: 'GET'
+  });
+}

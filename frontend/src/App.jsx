@@ -6,6 +6,7 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import ValuesPage from './pages/ValuesPage.jsx';
 import UsersPage from './pages/UsersPage.jsx';
 import UserDetailPage from './pages/UserDetailPage.jsx';
+import ListLikes from './pages/ListLikes.jsx';
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -34,6 +35,14 @@ export default function App() {
           element={
             <PrivateRoute>
               <UsersPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/lists"
+          element={
+            <PrivateRoute>
+              <ListLikes />
             </PrivateRoute>
           }
         />

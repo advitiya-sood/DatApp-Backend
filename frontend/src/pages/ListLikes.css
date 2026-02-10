@@ -1,0 +1,68 @@
+.lists-container {
+  width: 100%;
+  max-width: 1040px;
+  margin: auto;
+}
+
+.lists-panel {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 1.25rem;
+  padding: 1.75rem 1.9rem 2rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(148, 163, 184, 0.14);
+}
+
+.lists-header {
+  margin-bottom: 1.5rem;
+}
+
+.lists-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+/* Toggle Buttons */
+.lists-tab-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.lists-tab {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4b5563;
+  transition: all 0.2s ease;
+}
+
+.lists-tab:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.lists-tab.active {
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* Reuse the grid from UsersPage (or define it here) */
+.lists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.lists-empty {
+  margin-top: 2rem;
+  color: #6b7280;
+  font-style: italic;
+}

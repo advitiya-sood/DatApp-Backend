@@ -73,5 +73,17 @@ namespace DatApp.Services
             if (!await _repo.SaveAll())
                 throw new Exception("Failed to like user");
         }
+
+
+        public async Task<IEnumerable<UserForListDto>> GetUserLikesAsync(string predicate, int userId)
+        {
+            // 1. Get raw entities from Repo
+            var users = await _repo.GetUserLikes(predicate, userId);
+
+            // 2. Convert to DTOs to hide sensitive data (PasswordHash, Salt, etc.)
+            return _mapper.Map<IEnumerable<UserForListDto>>(users);
+        }
+
+
     }
 }

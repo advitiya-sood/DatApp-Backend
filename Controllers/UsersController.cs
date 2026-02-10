@@ -73,5 +73,24 @@ namespace DatApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("likes")]
+        public async Task<IActionResult> GetUserLikes([FromQuery] string predicate)
+        {
+
+
+            if (string.IsNullOrEmpty(predicate))
+                    {
+                        return BadRequest("You must select whether to view 'Likers' or 'Likees'.");
+                    }
+            // 1. Get the current logged-in user's ID from the token
+            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            // 2. Call the service to get the list
+            var users = await _userService.GetUserLikesAsync(predicate, currentUserId);
+
+            // 3. Return the list of users
+            return Ok(users);
+        }
     }
 }

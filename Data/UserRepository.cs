@@ -61,5 +61,49 @@ namespace DatApp.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+public async Task<IEnumerable<User>> GetUserLikes(string predicate, int userId)
+{
+    // 1. Start by looking at the Users table
+    var users = _context.Users.Include(x => x.Photos).OrderBy(u => u.Username).AsQueryable();
+    var likes = _context.Likes.AsQueryable();
+//    if (predicate == "Likers")
+//     {
+//         return await likes.Where(u => u.LikeeId == userId)
+//                           .Select(i => i.Liker)
+//                           .Include(u => u.Photos) 
+//                           .ToListAsync();
+//     }
+
+//     if (predicate == "Likees")
+//     {
+//         return await likes.Where(u => u.LikerId == userId)
+//                           .Select(i => i.Likee)
+//                           .Include(u => u.Photos) 
+//                           .ToListAsync();
+//     }
+
+
+if (predicate == "Likers")
+    {
+        // "Likers" = People who have liked ME.
+        // We filter for users where their "outgoing likes" (Likees) contains my ID.
+        return await users.Where(u => u.Likees.Any(like => like.LikeeId == userId))
+                          .ToListAsync();
+    }
+
+    if (predicate == "Likees")
+    {
+        // "Likees" = People I have liked.
+        // We filter for users where their "incoming likes" (Likers) contains my ID.
+        return await users.Where(u => u.Likers.Any(like => like.LikerId == userId))
+                          .ToListAsync();
+    }
+
+    return await users.ToListAsync();
+}
+
+
+
     }
 }

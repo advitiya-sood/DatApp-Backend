@@ -11,6 +11,7 @@ namespace DatApp.Data
         Task<bool> SaveAll();
         Task<IEnumerable<User>> GetUsers(string gender, int minAge, int maxAge);
         Task<User> GetUser(int id);
-        Task<Like> GetLike(int userId, int recipientId);
+        Task<Like> GetLike(int userId, int recipientId); // check if user is already liked or not
+        Task<IEnumerable<User>> GetUserLikes(string predicate, int userId); // get list of users that liked or are liked by the user
     }
 }
