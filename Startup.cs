@@ -71,7 +71,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         app.UseDeveloperExceptionPage();
     }
 
-    // ORDER MATTERS IN .NET 8:
     app.UseRouting();
 
     // CORS must be AFTER UseRouting but BEFORE UseAuthentication/Authorization

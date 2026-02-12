@@ -30,5 +30,10 @@ namespace DatApp.Models
 
         // Users that have liked this user (I am the likee)
         public ICollection<Like> Likers { get; set; }
+
+
+        // for relationship between User and Message
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
     }
 }

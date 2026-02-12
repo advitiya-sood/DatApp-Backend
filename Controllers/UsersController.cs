@@ -78,11 +78,12 @@ namespace DatApp.Controllers
         public async Task<IActionResult> GetUserLikes([FromQuery] string predicate)
         {
 
-
             if (string.IsNullOrEmpty(predicate))
                     {
                         return BadRequest("You must select whether to view 'Likers' or 'Likees'.");
                     }
+
+
             // 1. Get the current logged-in user's ID from the token
             int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 

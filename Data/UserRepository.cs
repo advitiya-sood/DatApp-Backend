@@ -86,8 +86,5 @@ if (predicate == "Likers")
 
     return await users.ToListAsync();
 }
-
-
-
     }
 }
