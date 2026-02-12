@@ -13,5 +13,15 @@ namespace DatApp.Data
         Task<User> GetUser(int id);
         Task<Like> GetLike(int userId, int recipientId); // check if user is already liked or not
         Task<IEnumerable<User>> GetUserLikes(string predicate, int userId); // get list of users that liked or are liked by the user
+    
+    
+        Task<Message> GetMessage(int id);
+        Task<IEnumerable<Message>> GetMessagesForUser(string container, int userId); // Inbox/Outbox/Unread
+        Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId); // Chat history
+    
+    
     }
+
+
+
 }
