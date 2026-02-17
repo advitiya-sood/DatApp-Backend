@@ -74,24 +74,26 @@ namespace DatApp.Controllers
             }
         }
 
-        [HttpGet("likes")]
-        public async Task<IActionResult> GetUserLikes([FromQuery] string predicate)
-        {
-
-            if (string.IsNullOrEmpty(predicate))
-                    {
+            [HttpGet("likes")]
+            public async Task<IActionResult> GetUserLikes([FromQuery] string predicate)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(predicate))
                         return BadRequest("You must select whether to view 'Likers' or 'Likees'.");
-                    }
 
+                    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (userIdClaim == null) return Unauthorized();
 
-            // 1. Get the current logged-in user's ID from the token
-            int currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            // 2. Call the service to get the list
-            var users = await _userService.GetUserLikesAsync(predicate, currentUserId);
-
-            // 3. Return the list of users
-            return Ok(users);
-        }
+                    int currentUserId = int.Parse(userIdClaim.Value);
+                    
+                    var users = await _userService.GetUserLikesAsync(predicate, currentUserId);
+                    return Ok(users);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Could not retrieve likes: " + ex.Message);
+                }
+            }
     }
 }

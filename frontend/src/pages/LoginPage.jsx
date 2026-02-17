@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth.jsx';
 import './AuthPages.css';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -17,7 +17,7 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     try {
-      const result = await loginRequest(username, password);
+      const result = await loginRequest(email, password);
       const token = result?.token || result?.Token || result?.TokenHandeler;
       if (!token) {
         throw new Error('Login succeeded but no token was returned.');
@@ -37,12 +37,12 @@ export default function LoginPage() {
       <p className="auth-subtitle">Sign in to explore values from the DatApp API.</p>
       <form className="auth-form" onSubmit={handleSubmit}>
         <label className="auth-label">
-          <span>Username</span>
+          <span>Email</span>
           <input
-            type="text"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="auth-input"
             required
           />
@@ -63,6 +63,9 @@ export default function LoginPage() {
           {loading ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
+      <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+        <a href="/request-password-reset" className="auth-link">Forgot your password?</a>
+      </div>
     </div>
   );
 }

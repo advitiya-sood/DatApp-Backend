@@ -7,6 +7,8 @@ import ValuesPage from './pages/ValuesPage.jsx';
 import UsersPage from './pages/UsersPage.jsx';
 import UserDetailPage from './pages/UserDetailPage.jsx';
 import ListLikes from './pages/ListLikes.jsx';
+import RequestPasswordResetPage from './pages/RequestPasswordResetPage.jsx';
+import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -54,6 +56,8 @@ export default function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/request-password-reset" element={<RequestPasswordResetPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Layout>

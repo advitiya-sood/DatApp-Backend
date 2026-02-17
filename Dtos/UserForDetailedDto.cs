@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatApp.Dtos
 {
     public class UserForDetailedDto
     {
+        [Required]
         public int Id { get; set; }
         public string Username { get; set; }
         public string KnownAs { get; set; }

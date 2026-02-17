@@ -10,6 +10,7 @@ namespace DatApp.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
+        public string Email { get; set; }
 
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
@@ -35,5 +36,9 @@ namespace DatApp.Models
         // for relationship between User and Message
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
+
+        //Password reset
+        public string PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpiry { get; set; }
     }
 }

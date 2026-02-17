@@ -22,25 +22,36 @@ namespace DatApp.Services
             _config = config;
         }
 
+
+
+
+
         public async Task<User> Register(UserforRegisterdto userForRegisterDto)
         {
+            userForRegisterDto.Email = userForRegisterDto.Email.ToLower();
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
-            if (await _repo.UserExists(userForRegisterDto.Username))
-                throw new Exception("Username already exists");
+            if (await _repo.UserExists(userForRegisterDto.Email))
+                throw new Exception("Email already exists");
 
             var userToCreate = new User
             {
+                Email = userForRegisterDto.Email,
                 Username = userForRegisterDto.Username
             };
 
             return await _repo.Registration(userToCreate, userForRegisterDto.Password);
         }
 
-        public async Task<string> Login(string username, string password)
+
+
+
+
+
+        public async Task<string> Login(string email, string password)
         {
             // 1. Check if user exists in DB
-            var userFromRepo = await _repo.Login(username.ToLower(), password);
+            var userFromRepo = await _repo.Login(email.ToLower(), password);
 
             if (userFromRepo == null)
                 return null; // Return null if login failed
@@ -49,7 +60,7 @@ namespace DatApp.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.Username)
+                new Claim(ClaimTypes.Email, userFromRepo.Email)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
@@ -67,6 +78,31 @@ namespace DatApp.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<bool> UserExists(string email)
+        {
+            return await _repo.UserExists(email);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _repo.GetUserByEmailAsync(email);
+        }
+
+        public async Task SavePasswordResetTokenAsync(User user, string token, DateTime expiry)
+        {
+            await _repo.SavePasswordResetTokenAsync(user, token, expiry);
+        }
+
+        public async Task<User> GetUserByResetTokenAsync(string token)
+        {
+            return await _repo.GetUserByResetTokenAsync(token);
+        }
+
+        public async Task ResetPasswordAsync(User user, string newPassword)
+        {
+            await _repo.ResetPasswordAsync(user, newPassword);
         }
     }
 }

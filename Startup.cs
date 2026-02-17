@@ -46,6 +46,7 @@ public void ConfigureServices(IServiceCollection services)
     // 4. Dependency Injection
     services.AddScoped<IAuthRepo, AuthRepo>();
     services.AddScoped<IUserRepository, UserRepository>();
+    
     services.AddScoped<IAuthService, AuthService>();
     services.AddScoped<IUserService, UserService>();
     

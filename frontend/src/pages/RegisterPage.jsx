@@ -4,9 +4,10 @@ import { register as registerRequest } from '../services/apiClient.js';
 import './AuthPages.css';
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -29,7 +30,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      await registerRequest(username, password);
+      await registerRequest(email, password, username);
       setSuccess('Registration successful. You can now log in.');
       setTimeout(() => navigate('/login'), 800);
     } catch (err) {
@@ -50,6 +51,16 @@ export default function RegisterPage() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="auth-input"
+            required
+          />
+        </label>
+        <label className="auth-label">
+          <span>Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="auth-input"
             required
           />
