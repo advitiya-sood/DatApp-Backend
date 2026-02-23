@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchUser, likeUser, updateUserProfile } from '../services/apiClient.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import './UserDetailPage.css';
 
 export default function UserDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -175,6 +176,13 @@ export default function UserDetailPage() {
             <div className="user-detail-actions">
               <button type="button" className="like-button" onClick={handleLike}>
                 ❤️ Like
+              </button>
+              <button 
+                type="button" 
+                className="message-button" 
+                onClick={() => navigate(`/messages/thread/${user.id ?? user.Id}`)}
+              >
+                💬 Message
               </button>
             </div>
           )}

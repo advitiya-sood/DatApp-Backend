@@ -28,6 +28,9 @@ export default function Layout({ children }) {
               <button type="button" className="nav-link" onClick={() => navigate('/lists')}>
                 Lists
               </button>
+              <button type="button" className="nav-link" onClick={() => navigate('/messages')}>
+                Messages
+              </button>
             </>
           )}
           {!isAuthenticated && (

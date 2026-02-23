@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchUserLikes, likeUser } from '../services/apiClient.js';
 import { useAuth } from '../hooks/useAuth.jsx';
 import './ListLikes.css';
 import './UsersPage.css'; 
 
 export default function ListLikes() {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [predicate, setPredicate] = useState('Likers'); // Default: Who likes me
   const [loading, setLoading] = useState(true);
@@ -76,24 +77,38 @@ export default function ListLikes() {
               const photoUrl = u.photoUrl ?? u.PhotoUrl;
 
               return (
-                <Link key={id} to={`/users/${id}`} className="user-card">
-                   <div className="user-avatar-wrapper">
-                    {photoUrl ? (
-                      <img src={photoUrl} alt={knownAs} className="user-avatar" />
-                    ) : (
-                      <div className="user-avatar-fallback">
-                        {(knownAs || username || '?').charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                  </div>
-                  <div className="user-card-main">
-                    <div className="user-card-header">
-                      <span className="user-name">{knownAs || username}</span>
-                      <span className="user-meta">{age}</span>
+                <div key={id} className="user-card-wrapper">
+                  <Link to={`/users/${id}`} className="user-card">
+                     <div className="user-avatar-wrapper">
+                      {photoUrl ? (
+                        <img src={photoUrl} alt={knownAs} className="user-avatar" />
+                      ) : (
+                        <div className="user-avatar-fallback">
+                          {(knownAs || username || '?').charAt(0).toUpperCase()}
+                        </div>
+                      )}
                     </div>
-                    <div className="user-location">{city}</div>
-                  </div>
-                </Link>
+                    <div className="user-card-main">
+                      <div className="user-card-header">
+                        <span className="user-name">{knownAs || username}</span>
+                        <span className="user-meta">{age}</span>
+                      </div>
+                      <div className="user-location">{city}</div>
+                    </div>
+                  </Link>
+                  {id !== userId && (
+                    <button 
+                      type="button" 
+                      className="message-button-card" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/messages/thread/${id}`);
+                      }}
+                    >
+                      💬 Message
+                    </button>
+                  )}
+                </div>
               );
             })}
             {users.length === 0 && (

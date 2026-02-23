@@ -87,3 +87,34 @@ export function fetchUserLikes(predicate) {
     method: 'GET'
   });
 }
+
+export function sendMessage(message) {
+  return request('/api/messages', {
+    method: 'POST',
+    body: JSON.stringify(message),
+  });
+}
+
+export function getMessages(container) {
+  return request(`/api/messages?container=${container}`, {
+    method: 'GET',
+  });
+}
+
+export function getMessageThread(recipientId) {
+  return request(`/api/messages/thread/${recipientId}`, {
+    method: 'GET',
+  });
+}
+
+export function markMessageAsRead(messageId) {
+  return request(`/api/messages/${messageId}/read`, {
+    method: 'POST',
+  });
+}
+
+export function deleteMessage(messageId) {
+  return request(`/api/messages/${messageId}`, {
+    method: 'POST',
+  });
+}

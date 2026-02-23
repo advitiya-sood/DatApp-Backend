@@ -37,6 +37,12 @@ namespace DatApp.Helpers
 
             // Mapping for profile updates
             CreateMap<UserForUpdateDto, User>();
+
+            // Mapping for messages
+            CreateMap<MessageForCreationDto, Message>();
+            CreateMap<Message, MessageToReturnDto>()
+                .ForMember(dest => dest.SenderUsername, opt => opt.MapFrom(src => src.Sender != null ? src.Sender.Username : src.SenderUsername))
+                .ForMember(dest => dest.RecipientUsername, opt => opt.MapFrom(src => src.Recipient != null ? src.Recipient.Username : src.RecipientUsername));
         }
     }
 }

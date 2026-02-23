@@ -1,0 +1,227 @@
+/* Styling for the MessagesPage */
+.messages-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.messages-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.messages-container button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.messages-container button:hover {
+  background-color: #0056b3;
+}
+
+.messages-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.messages-list li {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.messages-list li p {
+  margin: 5px 0;
+}
+
+/* Message Card Styles */
+.message-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.message-card.unread {
+  background: #eaf6ff;
+  font-weight: bold;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.avatar {
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.timestamp {
+  margin-left: auto;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.message-content {
+  margin-bottom: 0.5rem;
+}
+
+.message-actions button {
+  margin-right: 0.5rem;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.message-actions button:hover {
+  background: #d0e7ff;
+}
+
+/* Styling for the MessageThreadPage */
+.message-thread-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.message-thread-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.message-thread-container input {
+  width: 80%;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.message-thread-container button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.message-thread-container button:hover {
+  background-color: #218838;
+}
+
+.message-thread-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message-thread-list li {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f1f1f1;
+}
+
+.message-thread-list li p {
+  margin: 5px 0;
+}
+
+/* Message Thread Bubble Styles */
+.thread-list {
+  list-style: none;
+  padding: 0;
+}
+
+.thread-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.thread-message.me {
+  align-items: flex-end;
+}
+
+.bubble {
+  display: flex;
+  align-items: center;
+  background: #eaf6ff;
+  border-radius: 16px;
+  padding: 0.7rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  max-width: 60%;
+}
+
+.thread-message.me .bubble {
+  background: #d1e7dd;
+}
+
+.avatar {
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 0.7rem;
+}
+
+.sender {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.content {
+  margin-right: 0.5rem;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .message-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+  .avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+  }
+}

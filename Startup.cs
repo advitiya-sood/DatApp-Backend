@@ -49,6 +49,8 @@ public void ConfigureServices(IServiceCollection services)
     
     services.AddScoped<IAuthService, AuthService>();
     services.AddScoped<IUserService, UserService>();
+    // If using Startup.cs, in ConfigureServices:
+    services.AddScoped<IMessageService, MessageService>();
     
     // 5. JWT Authentication
     var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);

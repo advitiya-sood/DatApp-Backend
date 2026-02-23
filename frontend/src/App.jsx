@@ -9,6 +9,8 @@ import UserDetailPage from './pages/UserDetailPage.jsx';
 import ListLikes from './pages/ListLikes.jsx';
 import RequestPasswordResetPage from './pages/RequestPasswordResetPage.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
+import MessagesPage from './pages/MessagesPage.jsx';
+import MessageThreadPage from './pages/MessageThreadPage.jsx';
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -58,6 +60,22 @@ export default function App() {
         />
         <Route path="/request-password-reset" element={<RequestPasswordResetPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/messages"
+          element={
+            <PrivateRoute>
+              <MessagesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/messages/thread/:recipientId"
+          element={
+            <PrivateRoute>
+              <MessageThreadPage />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Layout>
