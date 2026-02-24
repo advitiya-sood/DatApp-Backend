@@ -12,23 +12,31 @@ namespace DatApp
     {
         public static void Main(string[] args)
         {
-            var host=CreateHostBuilder(args).Build();
-               using(var scope= host.Services.CreateScope())
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<Program>>();
                 try
                 {
                     var context = services.GetRequiredService<DataContext>();
+                    var env = services.GetRequiredService<IHostEnvironment>();
                     context.Database.Migrate();
-                    Seed.SeedUsers(context);
+                    if (env.IsDevelopment())
+                    {
+                        logger.LogInformation("Seeding users in development environment.");
+                        Seed.SeedUsers(context);
+                        logger.LogInformation("Seeding completed successfully.");
+                    }
+                    else
+                    {
+                        logger.LogInformation($"Skipping seeding. Current environment: {env.EnvironmentName}");
+                    }
                 }
-                catch( Exception exp)
+                catch (Exception exp)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(exp, "AN error occured while Seed migration");
-
+                    logger.LogError(exp, "An error occurred during database seeding/migration.");
                 }
-
             }
             host.Run();
         }
